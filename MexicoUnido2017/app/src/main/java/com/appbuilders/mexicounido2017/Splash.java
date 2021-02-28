@@ -1,20 +1,13 @@
 package com.appbuilders.mexicounido2017;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.appbuilders.mexicounido2017.Controller.Home;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import libraries.ReSTCallback;
 import libraries.ReSTClient;
@@ -45,7 +38,7 @@ public class Splash extends AppCompatActivity {
 
                 double time = millisUntilFinished / 1000;
 
-                if ( time == 5 ) {
+                if ( time == 3 ) {
 
                     // Right now we gonna get the cameras throw my API, but if you cant connect, you gonna use the original file.
                     ReSTClient rest = new ReSTClient("http://appbuilders.com.mx/fotomultas_cdmx/getCameras");
@@ -70,12 +63,8 @@ public class Splash extends AppCompatActivity {
                         @Override
                         public void onError(ReSTResponse response) {
 
-                            String errorMessage;
-                            if (response.statusCode == 404) {
-                                errorMessage = "HUMAN used SEARCH\nBut, it failed!";
-                            } else {
-                                errorMessage = "Error " + Integer.toString(response.statusCode);
-                            }
+                            String errorMessage = (response.statusCode == 404) ? "Failed!" : "Error " + Integer.toString(response.statusCode);
+                            Log.e("AB_DEV", errorMessage);
                             //Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_LONG).show();
 
                             startActivity(intent);
